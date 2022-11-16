@@ -1,0 +1,7 @@
+pane	0	1	:zsh	1	:##*	0	:/Users/flying_dodo	1	zsh	:
+pane	1	1	:CODE	0	:-	0	:/Users/flying_dodo/Documents/telosLabs/Projects/fiscalnote-reporting	1	zsh	:
+pane	1	2	:GENERAL	1	:*	0	:/Users/flying_dodo	1	zsh	:
+window	0	1	1	:##*	b41e,222x61,0,0,1
+window	1	1	0	:-	b41f,222x61,0,0,2
+window	1	2	1	:*	b420,222x61,0,0,3
+state	1	0
