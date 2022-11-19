@@ -1,7 +1,0 @@
-pane	0	1	:zsh	1	:##*	0	:/Users/flying_dodo	1	zsh	:
-pane	1	1	:CODE	1	:*	0	:/Users/flying_dodo/Documents/telosLabs/Projects/saverlife	1	zsh	:
-pane	1	2	:GENERAL	0	:-	0	:/Users/flying_dodo	1	zsh	:
-window	0	1	1	:##*	d23e,159x77,0,0,1
-window	1	1	1	:*	d23f,159x77,0,0,2
-window	1	2	0	:-	d240,159x77,0,0,3
-state	1	0

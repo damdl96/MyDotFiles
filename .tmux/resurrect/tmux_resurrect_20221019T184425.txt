@@ -1,8 +1,0 @@
-pane	0	1	:zsh	1	:##*	0	:/Users/flying_dodo	1	zsh	:
-pane	1	1	:CODE	0	:-	0	:/Users/flying_dodo/Documents/telosLabs/Projects/saverlife	1	zsh	:
-pane	1	2	:GENERAL	1	:*	0	:/Users/flying_dodo/Documents/vention/book-warehouse	0	ruby	:puma 5.6.5 (tcp://localhost:3000) [book-warehouse]  
-pane	1	2	:GENERAL	1	:*	1	:/Users/flying_dodo/Documents/vention/book-warehouse	1	ruby	:/Users/flying_dodo/.rvm/rubies/ruby-3.1.0/bin/ruby bin/rails c
-window	0	1	1	:##*	b41e,222x61,0,0,1
-window	1	1	0	:-	674f,159x38,0,0,10
-window	1	2	1	:*	9d8e,159x39,0,0[159x19,0,0,4,159x19,0,20,23]
-state	1	0
