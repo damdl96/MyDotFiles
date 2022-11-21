@@ -14,10 +14,13 @@ fi
 echo "Installing github CLI..."
 brew install gh
 
-echo "configuring your terminal with zsh..."
+echo "Installing ngrok..."
+brew install ngrok/ngrok/ngrok
+
+echo "Configuring your terminal with zsh..."
 sh zsh_setup.sh
 
-echo "configuring tmux on your computer..."
+echo "Configuring tmux on your computer..."
 sh tmux_setup.sh
 
 echo "Installing Visual Studio Code..."
