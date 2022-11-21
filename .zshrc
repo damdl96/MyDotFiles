@@ -2,14 +2,14 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/flying_dodo/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="oxide"
-ZSH_THEME="robbyrussell"
+ZSH_THEME="gnzh"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -69,7 +69,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git gh)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -109,9 +109,6 @@ export CPPFLAGS="-I/usr/local/opt/node@10/include"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 
-source /Users/flying_dodo/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
-source /Users/flying_dodo/.zsh/completion.zsh
-
 # Load completion config
 source $HOME/.zsh/completion.zsh
 
@@ -129,13 +126,14 @@ fi
 # Enhanced form of menu completion called `menu selection'
 zmodload -i zsh/complist
 
-source /Users/flying_dodo/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /Users/flying_dodo/.zsh/aliases.zsh
+source $HOME/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $HOME/.zsh/aliases.zsh
+source $HOME/.zsh/completion.zsh
 
 # openssl 1.1
-PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
-CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
-PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
-export GITHUB_OAUTH_TOKEN=3950254047118f29618fc62e381cba4a5ab13ca8
-export PATH="/usr/local/sbin:$PATH"
+# PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+# LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+# CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+# PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
+# export PATH="/usr/local/sbin:$PATH" 
