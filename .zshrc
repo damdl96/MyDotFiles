@@ -102,9 +102,7 @@ source $ZSH/oh-my-zsh.sh
 ulimit -n 200000
 unsetopt nomatch
 
-export PATH="/usr/local/opt/node@10/bin:$PATH"
-export LDFLAGS="-L/usr/local/opt/node@10/lib"
-export CPPFLAGS="-I/usr/local/opt/node@10/include"
+export NVM_DIR="~/.nvm"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
@@ -126,6 +124,7 @@ fi
 # Enhanced form of menu completion called `menu selection'
 zmodload -i zsh/complist
 
+# Aliases and extensions
 source $HOME/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.zsh/aliases.zsh
