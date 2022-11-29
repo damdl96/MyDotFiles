@@ -6,6 +6,9 @@ sh terminal_tools.sh
 echo "Configuring your terminal with zsh..."
 sh zsh_setup.sh
 
+echo "Configuring RVM on your computer..."
+sh rvm-install.sh
+
 echo "Configuring tmux on your computer..."
 sh tmux_setup.sh
 
