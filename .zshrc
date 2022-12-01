@@ -102,10 +102,15 @@ source $ZSH/oh-my-zsh.sh
 ulimit -n 200000
 unsetopt nomatch
 
-export NVM_DIR="~/.nvm"
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# NeoVim path
+export MYVIMRC="$HOME/.config/nvim/init.vim" 
 
 # Load completion config
 source $HOME/.zsh/completion.zsh
