@@ -21,3 +21,6 @@ nvm install --lts
 
 echo "Installing ngrok..."
 brew install ngrok/ngrok/ngrok
+
+echo "Installing rails..."
+gem install rails
