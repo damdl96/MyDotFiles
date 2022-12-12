@@ -106,9 +106,6 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
 # NeoVim path
 export MYVIMRC="$HOME/.config/nvim/init.vim" 
 
@@ -136,8 +133,30 @@ source $HOME/.zsh/aliases.zsh
 source $HOME/.zsh/completion.zsh
 
 # openssl 1.1
-# PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-# LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
-# CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
-# PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
-# export PATH="/usr/local/sbin:$PATH" 
+# export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+# export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+# export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
+
+# openssl 3.0
+export PATH="/usr/local/opt/openssl@3/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
+export PATH="/usr/local/sbin:$PATH" 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
+export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
+export PATH=/usr/local/opt/v8@3.15/bin:$PATH
+export CPATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include'
+export LIBRARY_PATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib'
+export SDKROOT="$(xcrun --show-sdk-path)"
+
+path=(
+	/Library/Developer/CommandLineTools/usr/bin
+	/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/bin
+	$path
+)
