@@ -9,4 +9,7 @@ call plug#begin()
   Plug 'nvim-lua/plenary.nvim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   Plug 'nvim-telescope/telescope.nvim'
+  Plug 'vim-scripts/indentLine.vim'
+  Plug 'zivyangll/git-blame.vim'
+  Plug 'airblade/vim-gitgutter'
 call plug#end()

@@ -1,5 +1,9 @@
 let mapleader=','
-colorscheme gruvbox                     " Sets the theme to gruvbox
+if $TERM_PROGRAM != "Apple_Terminal"
+  set termguicolors
+endif
+colorscheme gruvbox
+set background=dark
 syntax enable                           " Enables syntax highlighing
 " set -g focus-events on                  " Enables focus-events
 set hidden                              " Required to keep multiple buffers open multiple buffers
@@ -32,9 +36,21 @@ set nowritebackup                       " This is recommended by coc
 set updatetime=300                      " Faster completion
 set timeoutlen=500                      " By default timeoutlen is 1000 ms
 set formatoptions-=cro                  " Stop newline continution of comments
-" set autochdir                           Your working directory will always be the same as your working directory
-
+" set autochdir                           " Your working directory will always be the same as your working directory
+set list                                " Show tabspaces
+set listchars=tab:>-                    " Change tab characters
 au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
 
-" You can't stop me
 cmap w!! w !sudo tee %
+
+" Triger `autoread` when files changes on disk
+" https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+" https://vi.stackexchange.com/questions/13692/prevent-focusgained-autocmd-running-in-command-line-editing-mode
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+            \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+
+" Notification after file change
+" https://vi.stackexchange.com/questions/13091/autocmd-event-for-autoread
+autocmd FileChangedShellPost *
+  \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+
