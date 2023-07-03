@@ -4,15 +4,15 @@ nmap <leader>q :bw<CR>
 
 " NERDTree
 nnoremap <leader>/ :NERDTreeToggle<CR>
-nnoremap <leader>nf :NERDTreeFind<CR>
+nnoremap <leader>. :NERDTreeFind<CR>
 
 " Telescope
-nnoremap <leader>ff <cmd>Telescope find_files<CR>
-nnoremap <leader>ffh <cmd>Telescope find_files hidden=true<cr>
+nnoremap <leader>f <cmd>Telescope find_files<CR>
+nnoremap <leader>fh <cmd>Telescope find_files hidden=true<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<CR>
 nnoremap <leader>fgh <cmd>Telescope live_grep hidden=true<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <leader>fhi <cmd>Telescope help_tags<cr>
 
 " Git blame
 nnoremap <Leader>s :<C-u>call gitblame#echo()<CR>
