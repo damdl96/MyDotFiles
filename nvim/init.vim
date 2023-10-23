@@ -5,6 +5,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 let g:coc_global_extensions = ['coc-solargraph']
+let g:airline_theme='molokai'
 
 " Plugins
 source $HOME/.config/nvim/vim-plug/plugins.vim
