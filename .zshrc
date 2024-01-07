@@ -152,11 +152,6 @@ export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
 export PATH="/usr/local/opt/postgresql@14/bin:$PATH"
 export PATH="/usr/local/opt/v8@3.15/bin:$PATH"
 
-# CommandLineTools
-export CPATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
-export LIBRARY_PATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib"
-export SDKROOT="$(xcrun --show-sdk-path)"
-
 # rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
@@ -187,8 +182,9 @@ eval "$(rbenv init -)"
 # Aliases and extensions
 source $HOME/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOME/.zsh/aliases.zsh
-source $HOME/.zsh/completion.zsh
+# contained on MyDotFiles
+source $HOME/MyDotFiles/.zsh/aliases.zsh
+source $HOME/MyDotFiles/.zsh/completion.zsh
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
