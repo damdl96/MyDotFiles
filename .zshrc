@@ -132,3 +132,4 @@ source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # Aliases that are present on MyDotFiles
 source $HOME/MyDotFiles/.zsh/aliases.zsh
 source $HOME/MyDotFiles/.zsh/completion.zsh
+
