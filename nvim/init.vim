@@ -4,7 +4,6 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-let g:coc_global_extensions = ['coc-solargraph']
 let g:airline_theme='molokai'
 
 " Plugins
@@ -12,6 +11,9 @@ source $HOME/MyDotFiles/nvim/vim-plug/plugins.vim
 
 " Basic settings
 source $HOME/MyDotFiles/nvim/general/settings.vim
+
+" COC bindings
+source $HOME/MyDotFiles/nvim/coc.vim
 
 " Key mappings
 source $HOME/MyDotFiles/nvim/keys/mappings.vim
