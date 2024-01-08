@@ -112,9 +112,6 @@ export NVM_DIR="$HOME/.nvm"
 # NeoVim path
 export MYVIMRC="$HOME/.config/nvim/init.vim" 
 
-# Load completion config
-source $HOME/.zsh/completion.zsh
-
 # Initialize the completion system
 autoload -Uz compinit
 
@@ -181,9 +178,6 @@ eval "$(rbenv init -)"
 
 # Place openssl@1.1 at the beginning of your PATH (preempt system libs)
 #export PATH=$OPENSSL_PATH/bin:$PATH
-
-# Load rbenv
-#eval "$(rbenv init -)"
 
 # Libxslt
 #export PATH="/usr/local/opt/libxslt/bin:$PATH"
