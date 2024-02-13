@@ -40,6 +40,7 @@ set formatoptions-=cro                  " Stop newline continution of comments
 set list                                " Show tabspaces
 set listchars=tab:>-                    " Change tab characters
 au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
+set colorcolumn=80                      " Shows a column on the maximum character count
 
 cmap w!! w !sudo tee %
 
