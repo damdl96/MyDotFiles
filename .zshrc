@@ -126,82 +126,9 @@ fi
 # Enhanced form of menu completion called `menu selection'
 zmodload -i zsh/complist
 
-# openssl 1.1
-export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
-export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
-export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig"
-
-# openssl 3.0
-#export PATH="/usr/local/opt/openssl@3/bin:$PATH"
-#export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
-#export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
-#export PATH="/usr/local/sbin:$PATH" 
-#export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
-
-# Node version manager
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-# rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
-
-# Postgres
-export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
-export PATH="/usr/local/opt/postgresql@14/bin:$PATH"
-export PATH="/usr/local/opt/v8@3.15/bin:$PATH"
-
-# CommandLineTools
-export CPATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
-export LIBRARY_PATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib"
-export SDKROOT="$(xcrun --show-sdk-path)"
-
-# rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
-# Ruby
-#export LDFLAGS="-L/usr/local/opt/ruby/lib"
-#export CPPFLAGS="-I/usr/local/opt/ruby/include"
-
-# Setup Compiler paths for readline and openssl
-#local READLINE_PATH=$(brew --prefix readline)
-#local OPENSSL_PATH=$(brew --prefix openssl)
-#export LDFLAGS="-L$READLINE_PATH/lib -L$OPENSSL_PATH/lib"
-#export CPPFLAGS="-I$READLINE_PATH/include -I$OPENSSL_PATH/include"
-#export PKG_CONFIG_PATH="$READLINE_PATH/lib/pkgconfig:$OPENSSL_PATH/lib/pkgconfig"
-
-# Use the OpenSSL from Homebrew instead of ruby-build
-# Note: the Homebrew version gets updated, the ruby-build version doesn't
-#export RUBY_CONFIGURE_OPTS="--with-openssl-dir=$OPENSSL_PATH"
-
-# Place openssl@1.1 at the beginning of your PATH (preempt system libs)
-#export PATH=$OPENSSL_PATH/bin:$PATH
-
-# Libxslt
-#export PATH="/usr/local/opt/libxslt/bin:$PATH"
-#export LDFLAGS="-L/usr/local/opt/libxslt/lib"
-#export CPPFLAGS="-I/usr/local/opt/libxslt/include"
-
 # Aliases and extensions
 source $HOME/.zsh/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source $HOME/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOME/.zsh/aliases.zsh
-source $HOME/.zsh/completion.zsh
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/diegomoreno/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/Users/diegomoreno/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/diegomoreno/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/Users/diegomoreno/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+# Aliases that are present on MyDotFiles
+source $HOME/MyDotFiles/.zsh/aliases.zsh
+source $HOME/MyDotFiles/.zsh/completion.zsh
