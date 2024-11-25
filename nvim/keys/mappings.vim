@@ -1,6 +1,7 @@
 nmap <leader>z :u<CR>
 nmap <leader>Q :qa!<CR>
-nmap <leader>q :bw<CR>
+" nmap <leader>q :bw<CR>
+nnoremap <leader>v <c-v>
 
 " NERDTree
 nnoremap <leader>/ :NERDTreeToggle<CR>
