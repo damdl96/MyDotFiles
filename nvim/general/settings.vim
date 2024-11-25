@@ -5,7 +5,6 @@ endif
 colorscheme gruvbox
 set background=dark
 syntax enable                           " Enables syntax highlighing
-" set -g focus-events on                  " Enables focus-events
 set hidden                              " Required to keep multiple buffers open multiple buffers
 set nowrap                              " Display long lines as just one line
 set encoding=utf-8                      " The encoding displayed
