@@ -11,5 +11,6 @@ alias cp='cp -i'                              # confirm copy
 alias mv='mv -i'                              # confirm move
 alias cal='gcal --starting-day=1'             # print simple calendar for current month
 alias weather='curl v2.wttr.in'               # print weather for current location (https://github.com/chubin/wttr.in)
-alias rubocopmodified="git ls-files -m |  grep '.rb$' | xargs rubocop -A"   # Run rubocop over modified files
+alias rubocopmodified="git ls-files -m |  grep '.rb$' | xargs rubocop"   # Run rubocop over modified files
 alias rubocopstaged="gd --cached --name-only | grep '.rb$' | xargs rubocop" # Run rubocop over staged files
+alias rubocopstrictstaged="gd --cached --name-only | grep '.rb$' | xargs bundle exec rubocop -c .rubocop.strict.yml --force-exclusion" # Run rubocop over staged files
