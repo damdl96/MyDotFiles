@@ -1,4 +1,3 @@
-let mapleader=','
 if $TERM_PROGRAM != "Apple_Terminal"
   set termguicolors
 endif
@@ -9,7 +8,9 @@ set hidden                              " Required to keep multiple buffers open
 set nowrap                              " Display long lines as just one line
 set encoding=utf-8                      " The encoding displayed
 set pumheight=10                        " Makes popup menu smaller
-set fileencoding=utf-8                  " The encoding written to file
+if &modifiable
+  set fileencoding=utf-8
+endif
 set ruler                               " Show the cursor position all the time
 " set cmdheight=2                         More space for displaying messages
 set iskeyword+=-                        " treat dash separated words as a word text object"
@@ -38,7 +39,6 @@ set formatoptions-=cro                  " Stop newline continution of comments
 " set autochdir                           " Your working directory will always be the same as your working directory
 set list                                " Show tabspaces
 set listchars=tab:>-                    " Change tab characters
-au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
 set colorcolumn=80                      " Shows a column on the maximum character count
 
 cmap w!! w !sudo tee %
