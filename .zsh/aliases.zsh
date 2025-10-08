@@ -14,3 +14,4 @@ alias weather='curl v2.wttr.in'               # print weather for current locati
 alias rubocopmodified="git ls-files -m |  grep '.rb$' | xargs rubocop"   # Run rubocop over modified files
 alias rubocopstaged="gd --cached --name-only | grep '.rb$' | xargs rubocop" # Run rubocop over staged files
 alias rubocopstrictstaged="gd --cached --name-only | grep '.rb$' | xargs bundle exec rubocop -c .rubocop.strict.yml --force-exclusion" # Run rubocop over staged files
+alias eslintdiff='./node_modules/.bin/eslint $(git diff --name-only --diff-filter=d $(git merge-base HEAD master) | grep "\\.\([jt]sx\\?\\|md\\|json\\|ya\\?ml\\)\$")' #Run ESLint over changed files 
