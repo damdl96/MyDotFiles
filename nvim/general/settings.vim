@@ -41,6 +41,8 @@ set list                                " Show tabspaces
 set listchars=tab:>-                    " Change tab characters
 set colorcolumn=80                      " Shows a column on the maximum character count
 
+let NERDTreeShowHidden = 1
+
 cmap w!! w !sudo tee %
 
 " Triger `autoread` when files changes on disk

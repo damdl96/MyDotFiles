@@ -7,11 +7,9 @@ nnoremap <leader>v <c-v>
 nnoremap <leader>/ :NERDTreeToggle<CR>
 nnoremap <leader>. :NERDTreeFind<CR>
 
-" Telescope
+" Telescope (hidden files included by default, see telescope.setup in lazy.lua)
 nnoremap <leader>f <cmd>Telescope find_files<CR>
-nnoremap <leader>fh <cmd>Telescope find_files hidden=true<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<CR>
-nnoremap <leader>fgh <cmd>Telescope live_grep hidden=true<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fhi <cmd>Telescope help_tags<cr>
 
