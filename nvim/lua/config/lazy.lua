@@ -27,22 +27,22 @@ require("lazy").setup({
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        -- Parsers always kept installed
-        ensure_installed = {
-          "yaml", "bash", "lua", "vim", "vimdoc",
-          "json", "ruby",
-        },
-        -- Fetch a missing parser automatically when a filetype is opened
-        -- (needs the `tree-sitter` CLI on PATH)
-        auto_install = true,
-        -- Turn highlighting on by default for every buffer
-        highlight = { enable = true },
-      })
+    opts = {
+      -- Parsers always kept installed
+      ensure_installed = {
+        "yaml", "bash", "lua", "vim", "vimdoc",
+        "json", "ruby",
+      },
+      -- Fetch a missing parser automatically when a filetype is opened
+      -- (needs the `tree-sitter` CLI on PATH)
+      auto_install = true,
+      -- Turn highlighting on by default for every buffer
+      highlight = { enable = true },
+    },
+    config = function(_, opts)
+      require("nvim-treesitter.config").setup(opts) -- Note: 'config', not 'configs'
     end,
   },
-
   -- Neovim Store
   {
     "alex-popov-tech/store.nvim",
