@@ -1,6 +1,6 @@
 -- Bootstrap lazy.nvim if not installed
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -19,28 +19,100 @@ require("lazy").setup({
 
   -- File explorer
   { "preservim/nerdtree" },
-  { "ryanoasis/vim-devicons" },
+  {
+    "ryanoasis/vim-devicons",
+    -- vim-devicons must be sourced after NERDTree, since it hooks in through
+    -- NERDTree's `nerdtree_plugin/` runtime directory.
+    dependencies = { "preservim/nerdtree" },
+    config = function()
+      -- devicons attaches file glyphs by registering listeners on
+      -- g:NERDTreePathNotifier. That registration is missing from the
+      -- notifier's map by the time NERDTree builds its paths, so no glyphs are
+      -- ever attached and the tree renders bare filenames. Re-register once at
+      -- startup; the `index()` guard keeps a glyph from being added twice if
+      -- the original registration did survive.
+      vim.api.nvim_create_autocmd("VimEnter", {
+        group = vim.api.nvim_create_augroup("DeviconsNerdTreeFix", { clear = true }),
+        once = true,
+        callback = function()
+          if vim.fn.exists("g:NERDTreePathNotifier") == 0
+            or vim.fn.exists("*NERDTreeWebDevIconsRefreshListener") == 0
+          then
+            return
+          end
+
+          vim.cmd([[
+            for ev in ['init', 'refresh', 'refreshFlags']
+              if index(g:NERDTreePathNotifier.GetListenersForEvent(ev), 'NERDTreeWebDevIconsRefreshListener') < 0
+                call g:NERDTreePathNotifier.AddListener(ev, 'NERDTreeWebDevIconsRefreshListener')
+              endif
+            endfor
+          ]])
+        end,
+      })
+    end,
+  },
 
   -- Treesitter
   { "nvim-lua/popup.nvim" },
   { "nvim-lua/plenary.nvim" },
   {
     "nvim-treesitter/nvim-treesitter",
+    -- The `master` branch is archived; the rewrite lives on `main`. Pin it
+    -- explicitly, otherwise lazy.nvim leaves an existing clone on master and
+    -- `nvim-treesitter.config` (main only) fails to resolve.
+    branch = "main",
+    lazy = false, -- upstream: this plugin does not support lazy-loading
     build = ":TSUpdate",
-    opts = {
-      -- Parsers always kept installed
-      ensure_installed = {
+    -- No `opts` table here: on `main` the module system is gone, so setup()
+    -- accepts only `install_dir`. Parsers and highlighting are driven below.
+    config = function()
+      local ts = require("nvim-treesitter")
+
+      local function installed(lang)
+        return vim.tbl_contains(ts.get_installed("parsers"), lang)
+      end
+
+      local function start(buf, lang)
+        vim.schedule(function()
+          if vim.api.nvim_buf_is_valid(buf) then
+            pcall(vim.treesitter.start, buf, lang)
+          end
+        end)
+      end
+
+      -- Parsers always kept installed (replaces `ensure_installed`)
+      local missing = vim.tbl_filter(function(lang)
+        return not installed(lang)
+      end, {
         "yaml", "bash", "lua", "vim", "vimdoc",
         "json", "ruby",
-      },
-      -- Fetch a missing parser automatically when a filetype is opened
-      -- (needs the `tree-sitter` CLI on PATH)
-      auto_install = true,
-      -- Turn highlighting on by default for every buffer
-      highlight = { enable = true },
-    },
-    config = function(_, opts)
-      require("nvim-treesitter.config").setup(opts) -- Note: 'config', not 'configs'
+      })
+      if #missing > 0 then
+        ts.install(missing)
+      end
+
+      -- Turn highlighting on for every buffer whose language has a parser
+      -- (replaces `highlight.enable`), fetching a missing parser on the fly
+      -- when one is available (replaces `auto_install`; needs the
+      -- `tree-sitter` CLI on PATH).
+      vim.api.nvim_create_autocmd("FileType", {
+        group = vim.api.nvim_create_augroup("TreesitterHighlight", { clear = true }),
+        callback = function(ev)
+          local lang = vim.treesitter.language.get_lang(ev.match)
+          if not lang then
+            return
+          end
+
+          if installed(lang) then
+            start(ev.buf, lang)
+          elseif vim.tbl_contains(ts.get_available(), lang) then
+            ts.install({ lang }):await(function()
+              start(ev.buf, lang)
+            end)
+          end
+        end,
+      })
     end,
   },
   -- Neovim Store
@@ -80,7 +152,19 @@ require("lazy").setup({
   },
 
   -- Indentation guides
-  { "vim-scripts/indentLine.vim" },
+  -- indentLine drew its guides with `syntax match ... conceal`, which the
+  -- treesitter highlighter destroys: it does `vim.bo.syntax = ''` on start, so
+  -- the guides vanished on open and again after every reload (e.g. `git pull`).
+  -- indent-blankline uses extmarks via a decoration provider, so it is redrawn
+  -- on every screen update and survives both.
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    opts = {
+      indent = { char = "¦" },
+      scope = { enabled = false },
+    },
+  },
 
   -- Git
   { "zivyangll/git-blame.vim" },
@@ -115,58 +199,34 @@ require("lazy").setup({
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
       -- -----------------------------
-      -- Override "Go to Definition" to open in a new tab
+      -- "Go to Definition" (gd) opens in a new tab
       -- -----------------------------
-      local function open_location_in_new_tab(location, encoding)
-        if not location then return end
-
-        -- Convert LocationLink -> Location if needed
-        if location.targetUri and not location.uri then
-          location = {
-            uri = location.targetUri,
-            range = location.targetSelectionRange or location.targetRange,
-          }
-        end
-
-        -- Open new tab and jump
-        vim.cmd("tabnew")
-        vim.lsp.util.jump_to_location(location, encoding or "utf-8")
-      end
-
-      local function definition_handler(err, result, ctx, _)
-        if err then
-          vim.notify("LSP: Error finding definition: " .. tostring(err), vim.log.levels.ERROR)
-          return
-        end
-        if not result or vim.tbl_isempty(result) then
+      -- `on_list` hands us quickfix-style items that Neovim has already
+      -- normalized (LocationLink -> Location, offset encoding applied), so no
+      -- handler override or manual conversion is needed.
+      local function definition_in_new_tab(result)
+        local items = result.items
+        if not items or vim.tbl_isempty(items) then
           vim.notify("LSP: No definition found", vim.log.levels.WARN)
           return
         end
 
-        local encoding = "utf-8"
-        if ctx and ctx.client_id then
-          local client = vim.lsp.get_client_by_id(ctx.client_id)
-          encoding = (client and client.offset_encoding) or encoding
-        end
+        vim.cmd("tabnew")
 
-        if vim.tbl_islist(result) then
-          open_location_in_new_tab(result[1], encoding)
+        if #items == 1 then
+          local item = items[1]
+          vim.cmd.edit(vim.fn.fnameescape(item.filename))
+          vim.api.nvim_win_set_cursor(0, { item.lnum, math.max(item.col - 1, 0) })
         else
-          open_location_in_new_tab(result, encoding)
+          -- Several candidates: let the location list act as the picker
+          vim.fn.setloclist(0, {}, " ", result)
+          vim.cmd.lopen()
         end
       end
 
-      -- Set LSP handler globally
-      vim.lsp.handlers["textDocument/definition"] = definition_handler
-
-      -- Override vim.lsp.buf.definition so keymaps/context menus use it
-      vim.lsp.buf.definition = function()
-        local params = vim.lsp.util.make_position_params()
-        vim.lsp.buf_request(0, "textDocument/definition", params, definition_handler)
-      end
-
-      -- Map gd to new-tab definition
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
+      vim.keymap.set("n", "gd", function()
+        vim.lsp.buf.definition({ on_list = definition_in_new_tab })
+      end, { noremap = true, silent = true })
 
       -- -----------------------------
       -- LSP server setups using vim.lsp.config
